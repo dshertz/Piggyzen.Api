@@ -10,5 +10,6 @@ namespace piggyzen.api.Models
         public decimal Balance { get; set; }
         public string BookTransDescAmountBalanceID { get; set; }
         public int CategoryId { get; set; }
+        public Category Category { get; set; }
     }
 }

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("piggyzen.api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2c17299819ab11aedf77a5e0d560e9b85e5adf6a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+48f467287a18d354f525d53d72458291cbc0505d")]
 [assembly: System.Reflection.AssemblyProductAttribute("piggyzen.api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("piggyzen.api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
