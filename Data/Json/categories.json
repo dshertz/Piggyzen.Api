@@ -1,0 +1,282 @@
+[
+  {
+    "Id": 1,
+    "Name": "Inkomst",
+    "ParentCategoryId": null
+  },
+  {
+    "Id": 2,
+    "Name": "Utgift",
+    "ParentCategoryId": null
+  },
+  {
+    "Id": 3,
+    "Name": "Transaktion",
+    "ParentCategoryId": null
+  },
+  {
+    "Id": 4,
+    "Name": "Avgift till förening",
+    "ParentCategoryId": 1
+  },
+  {
+    "Id": 5,
+    "Name": "Värme",
+    "ParentCategoryId": 1
+  },
+  {
+    "Id": 6,
+    "Name": "Hushållsel",
+    "ParentCategoryId": 1
+  },
+  {
+    "Id": 7,
+    "Name": "Vatten och avlopp",
+    "ParentCategoryId": 1
+  },
+  {
+    "Id": 8,
+    "Name": "Underhåll/reparationer",
+    "ParentCategoryId": 1
+  },
+  {
+    "Id": 9,
+    "Name": "Bostadsrättsförsäkring",
+    "ParentCategoryId": 1
+  },
+  {
+    "Id": 10,
+    "Name": "Hemförsäkring",
+    "ParentCategoryId": 1
+  },
+  {
+    "Id": 11,
+    "Name": "Boende",
+    "ParentCategoryId": 2
+  },
+  {
+    "Id": 12,
+    "Name": "Fordon",
+    "ParentCategoryId": 2
+  },
+  {
+    "Id": 13,
+    "Name": "Övrigt - rörliga",
+    "ParentCategoryId": 2
+  },
+  {
+    "Id": 14,
+    "Name": "Övrigt - fasta",
+    "ParentCategoryId": 2
+  },
+  {
+    "Id": 15,
+    "Name": "El för hushållet",
+    "ParentCategoryId": 11
+  },
+  {
+    "Id": 16,
+    "Name": "Vatten och avlopp",
+    "ParentCategoryId": 11
+  },
+  {
+    "Id": 17,
+    "Name": "Avgift till förening",
+    "ParentCategoryId": 11
+  },
+  {
+    "Id": 18,
+    "Name": "Värme",
+    "ParentCategoryId": 11
+  },
+  {
+    "Id": 19,
+    "Name": "Underhåll/reparationer",
+    "ParentCategoryId": 11
+  },
+  {
+    "Id": 20,
+    "Name": "Bostadsrättsförsäkring",
+    "ParentCategoryId": 11
+  },
+  {
+    "Id": 21,
+    "Name": "Hemförsäkring",
+    "ParentCategoryId": 11
+  },
+  {
+    "Id": 22,
+    "Name": "Bolån",
+    "ParentCategoryId": 11
+  },
+  {
+    "Id": 23,
+    "Name": "Skatt",
+    "ParentCategoryId": 12
+  },
+  {
+    "Id": 24,
+    "Name": "Besiktning",
+    "ParentCategoryId": 12
+  },
+  {
+    "Id": 25,
+    "Name": "Försäkring",
+    "ParentCategoryId": 12
+  },
+  {
+    "Id": 26,
+    "Name": "Däck",
+    "ParentCategoryId": 12
+  },
+  {
+    "Id": 27,
+    "Name": "Reparationer och service",
+    "ParentCategoryId": 12
+  },
+  {
+    "Id": 28,
+    "Name": "Värdeminskning",
+    "ParentCategoryId": 12
+  },
+  {
+    "Id": 29,
+    "Name": "Bränsle",
+    "ParentCategoryId": 12
+  },
+  {
+    "Id": 30,
+    "Name": "Parkering",
+    "ParentCategoryId": 12
+  },
+  {
+    "Id": 31,
+    "Name": "Övrigt",
+    "ParentCategoryId": 12
+  },
+  {
+    "Id": 32,
+    "Name": "Fordonslån",
+    "ParentCategoryId": 12
+  },
+  {
+    "Id": 33,
+    "Name": "Livsmedel",
+    "ParentCategoryId": 13
+  },
+  {
+    "Id": 34,
+    "Name": "Kläder och skor",
+    "ParentCategoryId": 13
+  },
+  {
+    "Id": 35,
+    "Name": "Fritid/lek",
+    "ParentCategoryId": 13
+  },
+  {
+    "Id": 36,
+    "Name": "Mobiltelefon",
+    "ParentCategoryId": 13
+  },
+  {
+    "Id": 37,
+    "Name": "Hygienartiklar",
+    "ParentCategoryId": 13
+  },
+  {
+    "Id": 38,
+    "Name": "Förbrukningsvaror",
+    "ParentCategoryId": 13
+  },
+  {
+    "Id": 39,
+    "Name": "Hemutrustning",
+    "ParentCategoryId": 13
+  },
+  {
+    "Id": 40,
+    "Name": "Lunchkostnader",
+    "ParentCategoryId": 13
+  },
+  {
+    "Id": 41,
+    "Name": "Kollektivresor",
+    "ParentCategoryId": 13
+  },
+  {
+    "Id": 42,
+    "Name": "Läkare, tandläkare, medicin",
+    "ParentCategoryId": 13
+  },
+  {
+    "Id": 43,
+    "Name": "Sparande",
+    "ParentCategoryId": 13
+  },
+  {
+    "Id": 44,
+    "Name": "Andra kostnader",
+    "ParentCategoryId": 13
+  },
+  {
+    "Id": 45,
+    "Name": "Medier",
+    "ParentCategoryId": 14
+  },
+  {
+    "Id": 46,
+    "Name": "Övriga försäkringar",
+    "ParentCategoryId": 14
+  },
+  {
+    "Id": 47,
+    "Name": "Barnomsorg och underhållsbidrag",
+    "ParentCategoryId": 14
+  },
+  {
+    "Id": 48,
+    "Name": "A-kassa och fackavgift",
+    "ParentCategoryId": 14
+  },
+  {
+    "Id": 49,
+    "Name": "Återbetalning CSN-lån",
+    "ParentCategoryId": 14
+  },
+  {
+    "Id": 50,
+    "Name": "Övriga fasta kostnader",
+    "ParentCategoryId": 14
+  },
+  {
+    "Id": 51,
+    "Name": "Övriga lån",
+    "ParentCategoryId": 14
+  },
+  {
+    "Id": 52,
+    "Name": "Mellan konton",
+    "ParentCategoryId": 3
+  },
+  {
+    "Id": 53,
+    "Name": "Kontanter uttag",
+    "ParentCategoryId": 3
+  },
+  {
+    "Id": 54,
+    "Name": "Kontanter insättning",
+    "ParentCategoryId": 3
+  },
+  {
+    "Id": 55,
+    "Name": "Utlåning",
+    "ParentCategoryId": 3
+  },
+  {
+    "Id": 56,
+    "Name": "Återbetalning skuld",
+    "ParentCategoryId": 3
+  }
+]

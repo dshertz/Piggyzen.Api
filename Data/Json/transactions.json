@@ -1,0 +1,42 @@
+[
+  {
+    "Id": 1,
+    "BookingDate": "2020-05-01",
+    "TransactionDate": "2020-04-28",
+    "Description": "WWW.BAUHAUS.SE,JERFELLA,SE",
+    "Amount": -1038.0,
+    "Balance": 6818.89,
+    "BookTransDescAmountBalanceID": "2020-05-01--WWW.BAUHAUS.SE,JERFELLA,SE--1038.0-6818.89",
+    "CategoryId": 19
+  },
+  {
+    "Id": 2,
+    "BookingDate": "2020-05-01",
+    "TransactionDate": "2020-04-30",
+    "Description": "TEMPO LILJEHOLMEN,JONKOPING,SE",
+    "Amount": -427.4,
+    "Balance": 6391.49,
+    "BookTransDescAmountBalanceID": "2020-05-01--TEMPO LILJEHOLMEN,JONKOPING,SE--427.4-6391.49",
+    "CategoryId": 33
+  },
+  {
+    "Id": 3,
+    "BookingDate": "2020-05-02",
+    "TransactionDate": "2020-05-01",
+    "Description": "TEMPO LILJEHOLMEN,JONKOPING,SE",
+    "Amount": -300.43,
+    "Balance": 6091.06,
+    "BookTransDescAmountBalanceID": "2020-05-02--TEMPO LILJEHOLMEN,JONKOPING,SE--300.43-6091.06",
+    "CategoryId": 33
+  },
+  {
+    "Id": 4,
+    "BookingDate": "2020-05-03",
+    "TransactionDate": "2020-05-02",
+    "Description": "INGO JONKOPING, KORTEBOVE,JONKOPING,SE",
+    "Amount": -516.37,
+    "Balance": 5574.69,
+    "BookTransDescAmountBalanceID": "2020-05-03--INGO JONKOPING, KORTEBOVE,JONKOPING,SE--516.37-5574.69",
+    "CategoryId": 29
+  }
+]

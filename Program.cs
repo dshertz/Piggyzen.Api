@@ -13,6 +13,24 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+// Seed the database.
+using var scope = app.Services.CreateScope();
+var services = scope.ServiceProvider;
+
+try
+{
+    var context = services.GetRequiredService<PiggyzenContext>();
+    await context.Database.MigrateAsync();
+
+    await SeedData.LoadCategoryData(context);
+    await SeedData.LoadTransactionData(context);
+}
+catch (Exception ex)
+{
+    Console.WriteLine(ex.Message);
+    throw;
+}
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
