@@ -1,6 +1,6 @@
-namespace piggyzen.api.Models
+namespace piggyzen.api.Dtos.Transaction
 {
-    public class Transaction
+    public class GetTransactionByIdDto
     {
         public int Id { get; set; }
         public DateTime BookingDate { get; set; }

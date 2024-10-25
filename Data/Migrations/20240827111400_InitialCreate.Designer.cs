@@ -11,7 +11,7 @@ using piggyzen.api.Data;
 namespace piggyzen.api.Data.Migrations
 {
     [DbContext(typeof(PiggyzenContext))]
-    [Migration("20240825103139_InitialCreate")]
+    [Migration("20240827111400_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -35,6 +35,8 @@ namespace piggyzen.api.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ParentCategoryId");
+
                     b.ToTable("Categories");
                 });
 
@@ -54,7 +56,7 @@ namespace piggyzen.api.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<DateOnly>("BookingDate")
+                    b.Property<DateTime>("BookingDate")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("CategoryId")
@@ -64,12 +66,41 @@ namespace piggyzen.api.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<DateOnly>("TransactionDate")
+                    b.Property<DateTime>("TransactionDate")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CategoryId");
+
                     b.ToTable("Transactions");
+                });
+
+            modelBuilder.Entity("piggyzen.api.Models.Category", b =>
+                {
+                    b.HasOne("piggyzen.api.Models.Category", "ParentCategory")
+                        .WithMany("Subcategories")
+                        .HasForeignKey("ParentCategoryId");
+
+                    b.Navigation("ParentCategory");
+                });
+
+            modelBuilder.Entity("piggyzen.api.Models.Transaction", b =>
+                {
+                    b.HasOne("piggyzen.api.Models.Category", "Category")
+                        .WithMany("Transactions")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("piggyzen.api.Models.Category", b =>
+                {
+                    b.Navigation("Subcategories");
+
+                    b.Navigation("Transactions");
                 });
 #pragma warning restore 612, 618
         }

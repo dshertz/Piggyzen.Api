@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using piggyzen.api.Models;
 
 namespace piggyzen.api.Data
 {

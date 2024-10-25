@@ -49,21 +49,20 @@ namespace piggyzen.api.Data.Migrations
                     b.Property<decimal>("Balance")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("BookTransDescAmountBalanceID")
-                        .IsRequired()
+                    b.Property<DateTime>("BookingDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateOnly>("BookingDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("CategoryId")
+                    b.Property<int?>("CategoryId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<DateOnly>("TransactionDate")
+                    b.Property<string>("ImportId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("TransactionDate")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -86,9 +85,7 @@ namespace piggyzen.api.Data.Migrations
                 {
                     b.HasOne("piggyzen.api.Models.Category", "Category")
                         .WithMany("Transactions")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CategoryId");
 
                     b.Navigation("Category");
                 });

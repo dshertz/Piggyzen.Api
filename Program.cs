@@ -1,3 +1,5 @@
+global using piggyzen.api.Models;
+
 using Microsoft.EntityFrameworkCore;
 using piggyzen.api.Data;
 
