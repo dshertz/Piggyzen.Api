@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Piggyzen.Api.Data;
 
@@ -10,9 +11,11 @@ using Piggyzen.Api.Data;
 namespace Piggyzen.Api.Data.Migrations
 {
     [DbContext(typeof(PiggyzenContext))]
-    partial class PiggyzenContextModelSnapshot : ModelSnapshot
+    [Migration("20241118160425_AddCategoryGroupToCategory")]
+    partial class AddCategoryGroupToCategory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.8");
@@ -66,24 +69,6 @@ namespace Piggyzen.Api.Data.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("Piggyzen.Api.Models.Tag", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Tags");
-                });
-
             modelBuilder.Entity("Piggyzen.Api.Models.Transaction", b =>
                 {
                     b.Property<int>("Id")
@@ -112,6 +97,9 @@ namespace Piggyzen.Api.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("IsImported")
+                        .HasColumnType("INTEGER");
+
                     b.Property<bool>("IsOutlayOrReturn")
                         .HasColumnType("INTEGER");
 
@@ -126,9 +114,6 @@ namespace Piggyzen.Api.Data.Migrations
 
                     b.Property<DateTime>("TransactionDate")
                         .HasColumnType("TEXT");
-
-                    b.Property<int>("TransactionType")
-                        .HasColumnType("INTEGER");
 
                     b.Property<int>("VerificationStatus")
                         .HasColumnType("INTEGER");
@@ -161,21 +146,6 @@ namespace Piggyzen.Api.Data.Migrations
                     b.HasIndex("TargetTransactionId");
 
                     b.ToTable("TransactionRelations");
-                });
-
-            modelBuilder.Entity("Piggyzen.Api.Models.TransactionTag", b =>
-                {
-                    b.Property<int>("TransactionId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("TagId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("TransactionId", "TagId");
-
-                    b.HasIndex("TagId");
-
-                    b.ToTable("TransactionTags");
                 });
 
             modelBuilder.Entity("Piggyzen.Api.Models.CategorizationHistory", b =>
@@ -233,35 +203,11 @@ namespace Piggyzen.Api.Data.Migrations
                     b.Navigation("TargetTransaction");
                 });
 
-            modelBuilder.Entity("Piggyzen.Api.Models.TransactionTag", b =>
-                {
-                    b.HasOne("Piggyzen.Api.Models.Tag", "Tag")
-                        .WithMany("TransactionTags")
-                        .HasForeignKey("TagId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Piggyzen.Api.Models.Transaction", "Transaction")
-                        .WithMany("TransactionTags")
-                        .HasForeignKey("TransactionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Tag");
-
-                    b.Navigation("Transaction");
-                });
-
             modelBuilder.Entity("Piggyzen.Api.Models.Category", b =>
                 {
                     b.Navigation("Subcategories");
 
                     b.Navigation("Transactions");
-                });
-
-            modelBuilder.Entity("Piggyzen.Api.Models.Tag", b =>
-                {
-                    b.Navigation("TransactionTags");
                 });
 
             modelBuilder.Entity("Piggyzen.Api.Models.Transaction", b =>
@@ -271,8 +217,6 @@ namespace Piggyzen.Api.Data.Migrations
                     b.Navigation("SourceRelations");
 
                     b.Navigation("TargetRelations");
-
-                    b.Navigation("TransactionTags");
                 });
 #pragma warning restore 612, 618
         }

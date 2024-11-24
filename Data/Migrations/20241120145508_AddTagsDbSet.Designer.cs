@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Piggyzen.Api.Data;
 
@@ -10,9 +11,11 @@ using Piggyzen.Api.Data;
 namespace Piggyzen.Api.Data.Migrations
 {
     [DbContext(typeof(PiggyzenContext))]
-    partial class PiggyzenContextModelSnapshot : ModelSnapshot
+    [Migration("20241120145508_AddTagsDbSet")]
+    partial class AddTagsDbSet
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.8");
@@ -112,6 +115,9 @@ namespace Piggyzen.Api.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("IsImported")
+                        .HasColumnType("INTEGER");
+
                     b.Property<bool>("IsOutlayOrReturn")
                         .HasColumnType("INTEGER");
 
@@ -126,9 +132,6 @@ namespace Piggyzen.Api.Data.Migrations
 
                     b.Property<DateTime>("TransactionDate")
                         .HasColumnType("TEXT");
-
-                    b.Property<int>("TransactionType")
-                        .HasColumnType("INTEGER");
 
                     b.Property<int>("VerificationStatus")
                         .HasColumnType("INTEGER");

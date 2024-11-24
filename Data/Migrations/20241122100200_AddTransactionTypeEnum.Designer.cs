@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Piggyzen.Api.Data;
 
@@ -10,9 +11,11 @@ using Piggyzen.Api.Data;
 namespace Piggyzen.Api.Data.Migrations
 {
     [DbContext(typeof(PiggyzenContext))]
-    partial class PiggyzenContextModelSnapshot : ModelSnapshot
+    [Migration("20241122100200_AddTransactionTypeEnum")]
+    partial class AddTransactionTypeEnum
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.8");
