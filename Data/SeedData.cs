@@ -1,6 +1,6 @@
 using System.Text.Json;
 
-namespace piggyzen.api.Data
+namespace Piggyzen.Api.Data
 {
     public class SeedData
     {
@@ -11,35 +11,43 @@ namespace piggyzen.api.Data
                 PropertyNameCaseInsensitive = true
             };
 
-            if (context.Categories.Any()) return;
-
-            var json = System.IO.File.ReadAllText("Data/Json/categories.json");
-            var categories = JsonSerializer.Deserialize<List<Category>>(json, options);
-
-            if (categories is not null && categories.Count > 0)
+            if (!context.Categories.Any())
             {
-                await context.Categories.AddRangeAsync(categories);
-                await context.SaveChangesAsync();
+                var json = System.IO.File.ReadAllText("Data/Json/categories.json");
+                var categories = JsonSerializer.Deserialize<List<Category>>(json, options);
+
+                if (categories is not null && categories.Count > 0)
+                {
+                    await context.Categories.AddRangeAsync(categories);
+                    await context.SaveChangesAsync();
+                }
             }
         }
 
-        public static async Task LoadTransactionData(PiggyzenContext context)
+        public static async Task LoadTagData(PiggyzenContext context)
         {
             var options = new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true
             };
 
-            if (context.Transactions.Any()) return;
-
-            var json = System.IO.File.ReadAllText("Data/Json/transactions.json");
-            var transactions = JsonSerializer.Deserialize<List<Transaction>>(json, options);
-
-            if (transactions is not null && transactions.Count > 0)
+            if (!context.Tags.Any())
             {
-                await context.Transactions.AddRangeAsync(transactions);
-                await context.SaveChangesAsync();
+                var json = System.IO.File.ReadAllText("Data/Json/tags.json");
+                var tags = JsonSerializer.Deserialize<List<Tag>>(json, options);
+
+                if (tags is not null && tags.Count > 0)
+                {
+                    await context.Tags.AddRangeAsync(tags);
+                    await context.SaveChangesAsync();
+                }
             }
+        }
+
+        public static async Task SeedAll(PiggyzenContext context)
+        {
+            await LoadCategoryData(context);
+            await LoadTagData(context);
         }
     }
 }
