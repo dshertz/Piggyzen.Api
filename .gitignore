@@ -3,7 +3,18 @@
 ##
 ## Get latest from `dotnet new gitignore`
 
+# Lokala databaser
 *.db
+
+# Lokala konfigurationer och temporära filer
+.vscode/
+*.cache
+*.log
+*.tmp
+
+# Byggartefakter
+[Bb]in/
+[Oo]bj/
 
 # dotenv files
 .env
@@ -489,3 +500,5 @@ $RECYCLE.BIN/
 /obj
 /obj
 /obj
+piggyzen.api.http
+Properties/launchSettings.json

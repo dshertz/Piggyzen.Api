@@ -1,143 +1,116 @@
-using System.Globalization;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using piggyzen.api.Data;
-using piggyzen.api.Dtos.Transaction;
+using Piggyzen.Api.Features.Transactions;
 
-namespace piggyzen.api.Controllers
+namespace Piggyzen.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
     public class TransactionController : ControllerBase
-
     {
-        private readonly PiggyzenContext _context;
-        public TransactionController(PiggyzenContext context)
+        private readonly IMediator _mediator;
+
+        public TransactionController(IMediator mediator)
         {
-            _context = context;
+            _mediator = mediator;
         }
+
         [HttpGet]
-        public async Task<ActionResult<List<GetAllTransactionsDto>>> GetAllTransactions()
+        public async Task<IActionResult> GetAllTransactions()
         {
-            var transactions = await _context.Transactions.Include(c => c.Category).ThenInclude(t => t.ParentCategory).Select(c => new
-            {
-                Id = c.Id,
-                BookingDate = c.BookingDate.ToString("yyyy-MM-dd"),
-                Description = c.Description.Trim().ToLower().Normalize(),
-                Amount = c.Amount.ToString("F2", CultureInfo.InvariantCulture),
-            }).ToListAsync();
-            return Ok(transactions);
+            var result = await _mediator.Send(new GetAllTransactions.Query());
+            return Ok(result);
         }
+
         [HttpGet("{id}")]
-        public async Task<ActionResult<GetTransactionByIdDto>> GetTransactionById(int id)
+        public async Task<IActionResult> GetTransactionById(int id)
         {
-            var transaction = await _context.Transactions
-            .Include(t => t.Category)
-            .ThenInclude(c => c.ParentCategory)
-            .Where(t => t.Id == id)
-            .Select(t => new
-            {
-                Id = t.Id,
-                BookingDate = t.BookingDate,
-                TransactionDate = t.TransactionDate,
-                Description = t.Description,
-                Amount = t.Amount,
-                Balance = t.Balance,
-                CategoryName = t.Category.Name,
-                ParentCategoryName = t.Category.ParentCategory != null
-                ? t.Category.ParentCategory.Name
-                : null
-            })
-        .SingleOrDefaultAsync();
-
-            if (transaction is null)
-            {
-                return NotFound();
-            }
-            return Ok(transaction);
+            var result = await _mediator.Send(new GetTransactionById.Query { Id = id });
+            return result == null ? NotFound() : Ok(result);
         }
 
-        [HttpPost]
-        public async Task<ActionResult<CreateTransactionDto>> CreateTransaction(CreateTransactionDto transactionDto)
+        [HttpPost("create-complete")]
+        public async Task<IActionResult> CreateCompleteTransaction(CreateCompleteTransaction.Command command)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            var result = await _mediator.Send(command);
+            return CreatedAtAction(nameof(GetTransactionById), new { id = result.Id }, result);
+        }
 
-            if (!string.IsNullOrEmpty(transactionDto.ImportId))
-            {
-                var existingTransaction = await _context.Transactions.SingleOrDefaultAsync(t => t.ImportId == transactionDto.ImportId);
+        [HttpPost("create-partial")]
+        public async Task<IActionResult> CreatePartialTransaction(CreatePartialTransaction.Command command)
+        {
+            var result = await _mediator.Send(command);
+            return CreatedAtAction(nameof(GetTransactionById), new { id = result.Id }, result);
+        }
 
-                if (existingTransaction != null)
-                {
-                    return Conflict("En transaktion med detta ImportId finns redan.");
-                }
-            }
+        [HttpPost("import-text")]
+        [Consumes("text/plain")]
+        public async Task<IActionResult> ImportFromText([FromBody] string transactionData)
+        {
+            var result = await _mediator.Send(new ImportFromText.Command { TransactionData = transactionData });
+            return result.Count > 0 ? Ok(result) : BadRequest(result.Message);
+        }
 
-            var transaction = new Transaction
+        [HttpPut("complete-update/{id}")]
+        public async Task<IActionResult> CompleteUpdateTransaction(int id, UpdateCompleteTransaction.Command command)
+        {
+            command.Id = id;
+            await _mediator.Send(command);
+            return NoContent();
+        }
+
+        [HttpPut("partial-update/{id}")]
+        public async Task<IActionResult> PartialUpdateTransaction(int id, UpdatePartialTransaction.Command command)
+        {
+            command.Id = id;
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
+        /* [HttpPut("{transactionId}/category/{categoryId}")]
+        public async Task<IActionResult> AssignCategory(int transactionId, int categoryId)
+        {
+            var command = new AssignCategory.Command
             {
-                BookingDate = transactionDto.BookingDate,
-                TransactionDate = transactionDto.TransactionDate,
-                Description = transactionDto.Description.Trim(),
-                Amount = transactionDto.Amount,
-                Balance = transactionDto.Balance,
-                CategoryId = transactionDto.CategoryId,
-                ImportId = transactionDto.ImportId
+                TransactionId = transactionId,
+                CategoryId = categoryId
             };
-
-            _context.Transactions.Add(transaction);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction(nameof(GetTransactionById), new { id = transaction.Id }, transaction);
-        }
-        [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateTransaction(int id, UpdateTransactionDto model)
+            await _mediator.Send(command);
+            return NoContent();
+        } */
+        [HttpPut("{transactionId}/category/{categoryId}")]
+        public async Task<IActionResult> AssignCategory(int transactionId, int categoryId)
         {
-            if (!ModelState.IsValid) return BadRequest("Information saknas för att kunna uppdatera transaktionen");
-
-            // Kontrollera om transaktionen finns
-            var transaction = await _context.Transactions.FindAsync(id);
-            if (transaction == null) return NotFound($"Vi kan inte hitta en transaktion med id: {id}");
-
-            // Uppdatera transaktionens egenskaper
-            transaction.BookingDate = model.BookingDate;
-            transaction.TransactionDate = model.TransactionDate;
-            transaction.Description = model.Description?.Trim();
-            transaction.Amount = model.Amount;
-            transaction.Balance = model.Balance;
-            transaction.CategoryId = model.CategoryId;
-            transaction.ImportId = model.ImportId;
-
-            _context.Transactions.Update(transaction);
-
-            if (await _context.SaveChangesAsync() > 0)
+            Console.WriteLine($"API hit: transactionId={transactionId}, categoryId={categoryId}");
+            var command = new AssignCategory.Command
             {
-                return NoContent();
-            }
-
-            return StatusCode(500, "Internal Server Error");
+                TransactionId = transactionId,
+                CategoryId = categoryId
+            };
+            await _mediator.Send(command);
+            return NoContent();
         }
+
+        [HttpPost("ApproveCategory/{transactionId}")]
+        public async Task<IActionResult> ApproveCategory(int transactionId)
+        {
+            var command = new ApproveCategory.Command { TransactionId = transactionId };
+            await _mediator.Send(command);
+            return NoContent();
+        }
+
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteTransaction(int id)
+        public async Task<IActionResult> DeleteTransaction(int id)
         {
-            var transaction = await _context.Transactions.FindAsync(id);
-
-            if (transaction == null)
-            {
-                return NotFound($"Transaktionen med id {id} hittades inte.");
-            }
-
-            _context.Transactions.Remove(transaction);
-
-            if (await _context.SaveChangesAsync() > 0)
-            {
-                return NoContent();
-            }
-
-            return StatusCode(500, "Ett fel inträffade vid borttagning av transaktionen.");
+            var command = new DeleteTransaction.Command { Id = id };
+            await _mediator.Send(command);
+            return NoContent();
         }
-
+        [HttpPost("categorize")]
+        public async Task<IActionResult> CategorizeUncategorized()
+        {
+            var result = await _mediator.Send(new CategorizeUncategorizedTransactions.Command());
+            return Ok(result);
+        }
     }
 }

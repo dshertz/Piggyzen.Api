@@ -1,150 +1,63 @@
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using piggyzen.api.Data;
-using piggyzen.api.Models;
-using piggyzen.api.Dtos.Category;
+using Piggyzen.Api.Features.Categories;
 
-namespace piggyzen.api.Controllers
+namespace Piggyzen.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
     public class CategoryController : ControllerBase
     {
-        private readonly PiggyzenContext _context;
+        private readonly IMediator _mediator;
 
-        public CategoryController(PiggyzenContext context)
+        public CategoryController(IMediator mediator)
         {
-            _context = context;
+            _mediator = mediator;
         }
 
-        // GET: api/Category
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<GetAllCategoriesDto>>> GetCategories()
+        public async Task<IActionResult> GetAllCategories()
         {
-            var categories = await _context.Categories
-                .Select(c => new GetAllCategoriesDto
-                {
-                    Id = c.Id,
-                    Name = c.Name,
-                    ParentCategoryId = c.ParentCategoryId
-                })
-                .ToListAsync();
-
-            return Ok(categories);
+            var result = await _mediator.Send(new GetAllCategories.Query());
+            return Ok(result);
         }
 
-        // GET: api/Category/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<GetCategoryByIdDto>> GetCategory(int id)
+        public async Task<IActionResult> GetCategoryById(int id)
         {
-            var category = await _context.Categories
-                .Include(c => c.ParentCategory)
-                .Include(c => c.Subcategories)
-                .Where(c => c.Id == id)
-                .Select(c => new GetCategoryByIdDto
-                {
-                    Id = c.Id,
-                    Name = c.Name,
-                    ParentCategoryId = c.ParentCategoryId,
-                    ParentCategoryName = c.ParentCategory != null ? c.ParentCategory.Name : null,
-                    Subcategories = c.Subcategories.Select(sc => new GetAllCategoriesDto
-                    {
-                        Id = sc.Id,
-                        Name = sc.Name,
-                        ParentCategoryId = sc.ParentCategoryId
-                    }).ToList()
-                })
-                .SingleOrDefaultAsync();
-
-            if (category == null)
-            {
-                return NotFound($"Kategorin med id {id} hittades inte.");
-            }
-
-            return Ok(category);
+            var query = new GetCategoryById.Query { Id = id };
+            var result = await _mediator.Send(query);
+            return result == null ? NotFound($"Category with ID {id} not found.") : Ok(result);
         }
 
-        // POST: api/Category
         [HttpPost]
-        public async Task<ActionResult<GetCategoryByIdDto>> CreateCategory(CreateCategoryDto createDto)
+        public async Task<IActionResult> CreateCategory(CreateCategory.Command command)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var category = new Category
-            {
-                Name = createDto.Name,
-                ParentCategoryId = createDto.ParentCategoryId
-            };
-
-            _context.Categories.Add(category);
-            await _context.SaveChangesAsync();
-
-            var result = new GetCategoryByIdDto
-            {
-                Id = category.Id,
-                Name = category.Name,
-                ParentCategoryId = category.ParentCategoryId
-            };
-
-            return CreatedAtAction(nameof(GetCategory), new { id = category.Id }, result);
+            var result = await _mediator.Send(command);
+            return CreatedAtAction(nameof(GetCategoryById), new { id = result.Id }, result);
         }
 
-        // PUT: api/Category/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateCategory(int id, UpdateCategoryDto updateDto)
+        public async Task<IActionResult> UpdateCategory(int id, UpdateCategory.Command command)
         {
-            if (id != updateDto.Id)
-            {
-                return BadRequest("Id mismatch.");
-            }
-
-            var existingCategory = await _context.Categories.FindAsync(id);
-            if (existingCategory == null)
-            {
-                return NotFound($"Kategorin med id {id} hittades inte.");
-            }
-
-            existingCategory.Name = updateDto.Name;
-            existingCategory.ParentCategoryId = updateDto.ParentCategoryId;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException) when (!CategoryExists(id))
-            {
-                return NotFound();
-            }
-
+            command.Id = id;
+            await _mediator.Send(command);
             return NoContent();
         }
 
-        // DELETE: api/Category/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCategory(int id)
         {
-            var category = await _context.Categories.FindAsync(id);
-            if (category == null)
-            {
-                return NotFound($"Kategorin med id {id} hittades inte.");
-            }
-
-            _context.Categories.Remove(category);
-
-            if (await _context.SaveChangesAsync() > 0)
-            {
-                return NoContent();
-            }
-
-            return StatusCode(500, "Ett fel inträffade vid borttagning av kategorin.");
+            var command = new DeleteCategory.Command { Id = id };
+            await _mediator.Send(command);
+            return NoContent();
         }
 
-        private bool CategoryExists(int id)
+        [HttpGet("hierarchy")]
+        public async Task<IActionResult> GetCategoryHierarchy()
         {
-            return _context.Categories.Any(c => c.Id == id);
+            var result = await _mediator.Send(new GetCategoryHierarchy.Query());
+            return Ok(result);
         }
     }
 }
