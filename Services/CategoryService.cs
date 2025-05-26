@@ -18,7 +18,7 @@ namespace Piggyzen.Api.Services
         {
             var query = @"
         SELECT CategoryId 
-        FROM Transactions 
+        FROM CategorizationHistory 
         WHERE @Description LIKE '%' || Description || '%' 
         GROUP BY CategoryId 
         ORDER BY COUNT(CategoryId) DESC, MAX(Id) DESC
@@ -32,13 +32,12 @@ namespace Piggyzen.Api.Services
             await connection.OpenAsync();
             var result = await command.ExecuteScalarAsync();
 
-            // Hantera DBNull och null-resultat
             if (result == DBNull.Value || result == null)
             {
-                return null; // Ingen matchande kategori hittad
+                return null;
             }
 
-            return Convert.ToInt32(result); // Returnera CategoryId
+            return Convert.ToInt32(result);
         }
 
 

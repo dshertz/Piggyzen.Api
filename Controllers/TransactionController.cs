@@ -67,49 +67,87 @@ namespace Piggyzen.Api.Controllers
             return Ok(result);
         }
 
-        /* [HttpPut("{transactionId}/category/{categoryId}")]
-        public async Task<IActionResult> AssignCategory(int transactionId, int categoryId)
+        /*  [HttpPut("{transactionId}/category/{categoryId}")]
+         public async Task<IActionResult> AssignCategory(int transactionId, int categoryId)
+         {
+             Console.WriteLine($"API hit: transactionId={transactionId}, categoryId={categoryId}");
+             var command = new AssignCategory.Command
+             {
+                 TransactionId = transactionId,
+                 CategoryId = categoryId
+             };
+             await _mediator.Send(command);
+             return NoContent();
+         } */
+        [HttpPut("assign-category")]
+        public async Task<IActionResult> AssignCategory([FromBody] AssignCategory.Command command)
         {
-            var command = new AssignCategory.Command
+            if (command.TransactionIds == null || !command.TransactionIds.Any())
             {
-                TransactionId = transactionId,
-                CategoryId = categoryId
-            };
+                Console.WriteLine("No transactions provided in the request.");
+                return BadRequest("No transactions provided.");
+            }
+
+            Console.WriteLine($"API hit: Assigning category {command.CategoryId} to {command.TransactionIds.Count} transactions.");
+
             await _mediator.Send(command);
-            return NoContent();
-        } */
-        [HttpPut("{transactionId}/category/{categoryId}")]
-        public async Task<IActionResult> AssignCategory(int transactionId, int categoryId)
-        {
-            Console.WriteLine($"API hit: transactionId={transactionId}, categoryId={categoryId}");
-            var command = new AssignCategory.Command
-            {
-                TransactionId = transactionId,
-                CategoryId = categoryId
-            };
-            await _mediator.Send(command);
+
             return NoContent();
         }
 
-        [HttpPost("ApproveCategory/{transactionId}")]
-        public async Task<IActionResult> ApproveCategory(int transactionId)
+        [HttpPost("approve-category")]
+        public async Task<IActionResult> ApproveCategory([FromBody] List<int> transactionIds)
         {
-            var command = new ApproveCategory.Command { TransactionId = transactionId };
+            if (transactionIds == null || !transactionIds.Any())
+            {
+                return BadRequest("No transactions selected for approval.");
+            }
+
+            await _mediator.Send(new ApproveCategory.Command { TransactionIds = transactionIds });
+            return Ok("Categories approved successfully!");
+        }
+
+        [HttpDelete]
+        [HttpPost("delete")]
+        public async Task<IActionResult> DeleteTransactions([FromBody] List<int> transactionIds)
+        {
+            if (transactionIds == null || !transactionIds.Any())
+            {
+                return BadRequest("No transaction IDs provided.");
+            }
+
+            var command = new DeleteTransaction.Command { TransactionIds = transactionIds };
             await _mediator.Send(command);
+
             return NoContent();
         }
 
-        [HttpDelete("{id}")]
+        /* [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTransaction(int id)
         {
             var command = new DeleteTransaction.Command { Id = id };
             await _mediator.Send(command);
             return NoContent();
-        }
+        } */
+
         [HttpPost("categorize")]
         public async Task<IActionResult> CategorizeUncategorized()
         {
             var result = await _mediator.Send(new CategorizeUncategorizedTransactions.Command());
+            return Ok(result);
+        }
+
+        [HttpGet("{transactionId}/similar")]
+        public async Task<IActionResult> GetSimilarTransactions(int transactionId)
+        {
+            var similarTransactions = await _mediator.Send(new GetSimilarTransactions.Query { TransactionId = transactionId });
+            return Ok(similarTransactions);
+        }
+
+        [HttpPost("get-selected-transactions")]
+        public async Task<IActionResult> GetSelectedTransactions([FromBody] List<int> transactionIds)
+        {
+            var result = await _mediator.Send(new GetSelectedTransactions.Query { TransactionIds = transactionIds });
             return Ok(result);
         }
     }

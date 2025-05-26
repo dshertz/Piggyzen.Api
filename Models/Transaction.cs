@@ -22,11 +22,12 @@ namespace Piggyzen.Api.Models
         public List<TransactionRelation> SourceRelations { get; set; } = new(); // Relationer där denna transaktion är källan
         public List<TransactionRelation> TargetRelations { get; set; } = new(); // Relationer där denna transaktion är målet
 
-        public TransactionTypeEnum TransactionType { get; set; } = TransactionTypeEnum.Complete; // Standard till Complete
+        public TransactionTypeEnum TransactionType { get; set; } = TransactionTypeEnum.Complete; // 0 Partial, 1 Complete
         public bool IsOutlayOrReturn { get; set; } = false;
         public decimal? AdjustedAmount { get; set; }
         public CategorizationStatusEnum CategorizationStatus { get; set; } = CategorizationStatusEnum.NotCategorized;
         public VerificationStatusEnum VerificationStatus { get; set; } = VerificationStatusEnum.Unverified; // Verifieringsstatus. Verifiera Misstänkta Dubletter eller Unik
         public ICollection<TransactionTag> TransactionTags { get; set; } = new List<TransactionTag>();
+        public bool HasSimilar { get; set; } = false;
     }
 }

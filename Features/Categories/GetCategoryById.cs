@@ -17,6 +17,8 @@ namespace Piggyzen.Api.Features.Categories
             public string Name { get; set; }
             public int? ParentCategoryId { get; set; }
             public string ParentCategoryName { get; set; } = string.Empty;
+            public bool IsActive { get; set; } // Nytt fält
+            public bool IsSystemCategory { get; set; } // Nytt fält
             public List<SubcategoryModel> Subcategories { get; set; } = new();
 
             public class SubcategoryModel
@@ -24,6 +26,8 @@ namespace Piggyzen.Api.Features.Categories
                 public int Id { get; set; }
                 public string Name { get; set; }
                 public int? ParentCategoryId { get; set; }
+                public bool IsActive { get; set; } // Nytt fält
+                public bool IsSystemCategory { get; set; } // Nytt fält
             }
         }
 
@@ -48,11 +52,15 @@ namespace Piggyzen.Api.Features.Categories
                         Name = c.Name,
                         ParentCategoryId = c.ParentCategoryId,
                         ParentCategoryName = c.ParentCategory != null ? c.ParentCategory.Name : string.Empty,
+                        IsActive = c.IsActive, // Lägg till IsActive
+                        IsSystemCategory = c.IsSystemCategory, // Lägg till IsSystemCategory
                         Subcategories = c.Subcategories.Select(sc => new Model.SubcategoryModel
                         {
                             Id = sc.Id,
                             Name = sc.Name,
-                            ParentCategoryId = sc.ParentCategoryId
+                            ParentCategoryId = sc.ParentCategoryId,
+                            IsActive = sc.IsActive, // Lägg till IsActive
+                            IsSystemCategory = sc.IsSystemCategory // Lägg till IsSystemCategory
                         }).ToList()
                     })
                     .SingleOrDefaultAsync(cancellationToken);

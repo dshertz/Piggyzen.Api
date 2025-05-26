@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Piggyzen.Api.Data;
 
@@ -10,9 +11,11 @@ using Piggyzen.Api.Data;
 namespace Piggyzen.Api.Data.Migrations
 {
     [DbContext(typeof(PiggyzenContext))]
-    partial class PiggyzenContextModelSnapshot : ModelSnapshot
+    [Migration("20241229150606_AddAllowSubcategories")]
+    partial class AddAllowSubcategories
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.8");
@@ -114,9 +117,6 @@ namespace Piggyzen.Api.Data.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("TEXT");
-
-                    b.Property<bool>("HasSimilar")
-                        .HasColumnType("INTEGER");
 
                     b.Property<bool>("IsOutlayOrReturn")
                         .HasColumnType("INTEGER");

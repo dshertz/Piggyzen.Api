@@ -8,8 +8,9 @@ namespace Piggyzen.Api.Models
         public Category ParentCategory { get; set; }
         public bool IsStandard { get; set; }
         public bool IsActive { get; set; }
+        public bool IsSystemCategory { get; set; }
+        public bool AllowSubcategories { get; set; }
         public ICollection<Category> Subcategories { get; set; } = new List<Category>();
         public ICollection<Transaction> Transactions { get; set; } = new List<Transaction>();
-        public CategoryGroupEnum Group { get; set; } = CategoryGroupEnum.None;
     }
 }

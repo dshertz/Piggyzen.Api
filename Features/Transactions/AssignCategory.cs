@@ -8,9 +8,10 @@ namespace Piggyzen.Api.Features.Transactions
     {
         public class Command : IRequest
         {
-            public int TransactionId { get; set; }
+            public List<int> TransactionIds { get; set; } = new();
             public int CategoryId { get; set; }
         }
+
         public class Handler : IRequestHandler<Command>
         {
             private readonly PiggyzenContext _context;
@@ -24,16 +25,29 @@ namespace Piggyzen.Api.Features.Transactions
 
             public async Task Handle(Command request, CancellationToken cancellationToken)
             {
-                Console.WriteLine($"TransactionId: {request.TransactionId}, CategoryId: {request.CategoryId}");
-                // Hämta transaktionen
-                var transaction = await _context.Transactions.FindAsync(request.TransactionId);
-                if (transaction == null)
+                if (request.TransactionIds == null || !request.TransactionIds.Any())
                 {
-                    Console.WriteLine("Transaction not found.");
-                    throw new KeyNotFoundException($"Transaction with ID {request.TransactionId} not found.");
+                    Console.WriteLine("No transactions provided.");
+                    throw new ArgumentException("No transactions provided for categorization.");
                 }
-                // Använd CategoryService för att tilldela kategorin och hantera historiken
-                await _categoryService.AssignCategoryAsync(transaction, request.CategoryId);
+
+                foreach (var transactionId in request.TransactionIds)
+                {
+                    Console.WriteLine($"Processing TransactionId: {transactionId}, CategoryId: {request.CategoryId}");
+                    // Hämta transaktionen
+                    var transaction = await _context.Transactions.FindAsync(transactionId);
+                    if (transaction == null)
+                    {
+                        Console.WriteLine($"Transaction with ID {transactionId} not found. Skipping.");
+                        continue; // Hoppa över om transaktionen inte finns
+                    }
+
+                    // Använd CategoryService för att tilldela kategorin och hantera historiken
+                    await _categoryService.AssignCategoryAsync(transaction, request.CategoryId);
+                }
+
+                // Spara ändringarna efter att alla transaktioner bearbetats
+                await _context.SaveChangesAsync(cancellationToken);
             }
         }
     }

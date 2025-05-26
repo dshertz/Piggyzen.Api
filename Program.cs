@@ -10,9 +10,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddDbContext<PiggyzenContext>(options => options.UseSqlite(builder.Configuration.GetConnectionString("Sqlite")));
-
 builder.Services.AddScoped<TransactionService>();
 builder.Services.AddScoped<CategoryService>();
+
+// Lägg till logging
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+builder.Logging.AddDebug();
 
 // Register MediatR
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<Program>());
@@ -22,12 +26,17 @@ builder.Services.AddControllers(options =>
 {
     options.InputFormatters.Insert(0, new TextPlainInputFormatter());
 });
+
+var allowedOrigins = builder.Configuration.GetSection("AllowedOrigins").Get<string[]>();
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAllOrigins",
-        builder => builder.AllowAnyOrigin()
-                          .AllowAnyMethod()
-                          .AllowAnyHeader());
+    options.AddPolicy("AllowSpecificOrigins", policy =>
+    {
+        policy.WithOrigins(allowedOrigins)
+              .AllowAnyMethod()
+              .AllowAnyHeader()
+              .AllowCredentials();
+    });
 });
 
 
@@ -42,7 +51,7 @@ builder.Services.AddSwaggerGen(options =>
 
 var app = builder.Build();
 
-
+app.UseCors("AllowSpecificOrigins");
 
 // Seed the database.
 using var scope = app.Services.CreateScope();
@@ -74,8 +83,6 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
-
-app.UseCors("AllowAllOrigins");
 
 app.Run();
 

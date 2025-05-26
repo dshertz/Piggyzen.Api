@@ -10,6 +10,7 @@ namespace Piggyzen.Api.Features.Categories
             public string Name { get; set; }
             public int? ParentCategoryId { get; set; }
             public bool IsActive { get; set; }
+            public bool IsStandard { get; set; }
         }
 
         public class Handler : IRequestHandler<Command, Category>
@@ -27,7 +28,10 @@ namespace Piggyzen.Api.Features.Categories
                 {
                     Name = request.Name,
                     ParentCategoryId = request.ParentCategoryId,
-                    IsActive = request.IsActive
+                    IsActive = request.IsActive,
+                    IsStandard = request.IsStandard,
+                    IsSystemCategory = false,
+                    AllowSubcategories = false
                 };
 
                 _context.Categories.Add(category);

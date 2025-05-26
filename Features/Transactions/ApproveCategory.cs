@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Piggyzen.Api.Data;
 
 namespace Piggyzen.Api.Features.Transactions
@@ -7,7 +8,7 @@ namespace Piggyzen.Api.Features.Transactions
     {
         public class Command : IRequest
         {
-            public int TransactionId { get; set; }
+            public List<int> TransactionIds { get; set; } = new();
         }
 
         public class Handler : IRequestHandler<Command>
@@ -21,13 +22,26 @@ namespace Piggyzen.Api.Features.Transactions
 
             public async Task Handle(Command request, CancellationToken cancellationToken)
             {
-                var transaction = await _context.Transactions.FindAsync(request.TransactionId);
-                if (transaction == null)
+                // Hämta alla transaktioner som matchar de skickade IDs
+                var transactions = await _context.Transactions
+                    .Where(t => request.TransactionIds.Contains(t.Id))
+                    .ToListAsync(cancellationToken);
+
+                if (!transactions.Any())
                 {
-                    throw new KeyNotFoundException($"Transaction with ID {request.TransactionId} not found.");
+                    throw new KeyNotFoundException("No transactions found for the given IDs.");
                 }
 
-                transaction.CategorizationStatus = CategorizationStatusEnum.ManuallyCategorized;
+                foreach (var transaction in transactions)
+                {
+                    // Uppdatera status till ManuallyCategorized
+                    transaction.CategorizationStatus = CategorizationStatusEnum.ManuallyCategorized;
+
+                    // Sätt HasSimilar till false
+                    transaction.HasSimilar = false;
+                }
+
+                // Spara alla ändringar i en enda operation
                 await _context.SaveChangesAsync(cancellationToken);
             }
         }

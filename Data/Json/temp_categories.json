@@ -1,0 +1,520 @@
+[
+  {
+    "Id": 1,
+    "Name": "Inkomster",
+    "ParentCategoryId": null,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+  {
+    "Id": 2,
+    "Name": "Utgifter",
+    "ParentCategoryId": null,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+  {
+    "Id": 3,
+    "Name": "Transfers",
+    "ParentCategoryId": null,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+
+  {
+    "Id": 4,
+    "Name": "Lön",
+    "ParentCategoryId": 1,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+  {
+    "Id": 5,
+    "Name": "Förmåner",
+    "ParentCategoryId": 1,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+  {
+    "Id": 6,
+    "Name": "Arbetslöshetsersättning",
+    "ParentCategoryId": 1,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+  {
+    "Id": 7,
+    "Name": "Sjuk-/föräldrapenning",
+    "ParentCategoryId": 1,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+  {
+    "Id": 8,
+    "Name": "Sjuk-/aktivitetsersättning",
+    "ParentCategoryId": 1,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+  {
+    "Id": 9,
+    "Name": "Pension",
+    "ParentCategoryId": 1,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+  {
+    "Id": 10,
+    "Name": "Vårdbidrag",
+    "ParentCategoryId": 1,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+  {
+    "Id": 11,
+    "Name": "Studiestöd",
+    "ParentCategoryId": 1,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+  {
+    "Id": 12,
+    "Name": "Barnbidrag",
+    "ParentCategoryId": 1,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+  {
+    "Id": 13,
+    "Name": "Underhållsbidrag",
+    "ParentCategoryId": 1,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+  {
+    "Id": 14,
+    "Name": "Bostadsbidrag/bostadstillägg",
+    "ParentCategoryId": 1,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+  {
+    "Id": 15,
+    "Name": "Kapitalinkomster",
+    "ParentCategoryId": 1,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+  {
+    "Id": 16,
+    "Name": "Övriga inkomster",
+    "ParentCategoryId": 1,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+
+  {
+    "Id": 17,
+    "Name": "Bostad",
+    "ParentCategoryId": 2,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+  {
+    "Id": 18,
+    "Name": "El för hushållet",
+    "ParentCategoryId": 17,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+  {
+    "Id": 19,
+    "Name": "Vatten och avlopp",
+    "ParentCategoryId": 17,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+  {
+    "Id": 20,
+    "Name": "Värme",
+    "ParentCategoryId": 17,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+  {
+    "Id": 21,
+    "Name": "Hyra",
+    "ParentCategoryId": 17,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+  {
+    "Id": 22,
+    "Name": "Avgift till förening",
+    "ParentCategoryId": 17,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+  {
+    "Id": 23,
+    "Name": "Underhåll/reparationer",
+    "ParentCategoryId": 17,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+  {
+    "Id": 24,
+    "Name": "Renhållningsavgift",
+    "ParentCategoryId": 17,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+  {
+    "Id": 25,
+    "Name": "Försäkring",
+    "ParentCategoryId": 17,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+  {
+    "Id": 26,
+    "Name": "Bolån",
+    "ParentCategoryId": 17,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+  {
+    "Id": 27,
+    "Name": "Övrigt",
+    "ParentCategoryId": 17,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+
+  {
+    "Id": 28,
+    "Name": "Fordon",
+    "ParentCategoryId": 2,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+  {
+    "Id": 29,
+    "Name": "Skatt",
+    "ParentCategoryId": 28,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+  {
+    "Id": 30,
+    "Name": "Besiktning",
+    "ParentCategoryId": 28,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+  {
+    "Id": 31,
+    "Name": "Försäkring",
+    "ParentCategoryId": 28,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+  {
+    "Id": 32,
+    "Name": "Reparationer och service",
+    "ParentCategoryId": 28,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+  {
+    "Id": 33,
+    "Name": "Bränsle",
+    "ParentCategoryId": 28,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+  {
+    "Id": 34,
+    "Name": "Parkering",
+    "ParentCategoryId": 28,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+  {
+    "Id": 35,
+    "Name": "Fordonslån",
+    "ParentCategoryId": 28,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+  {
+    "Id": 36,
+    "Name": "Övrigt",
+    "ParentCategoryId": 28,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+
+  {
+    "Id": 37,
+    "Name": "Buffert",
+    "ParentCategoryId": 3,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+  {
+    "Id": 38,
+    "Name": "Mellan konton",
+    "ParentCategoryId": 3,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+  {
+    "Id": 39,
+    "Name": "Återbetalning",
+    "ParentCategoryId": 3,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+  {
+    "Id": 40,
+    "Name": "Kontanter",
+    "ParentCategoryId": 3,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+  {
+    "Id": 41,
+    "Name": "Utlåning",
+    "ParentCategoryId": 3,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+  {
+    "Id": 42,
+    "Name": "Återköp",
+    "ParentCategoryId": 3,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+
+  {
+    "Id": 43,
+    "Name": "Övriga kostnader",
+    "ParentCategoryId": 2,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+  {
+    "Id": 44,
+    "Name": "Rörliga kostnader",
+    "ParentCategoryId": 43,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+  {
+    "Id": 45,
+    "Name": "Livsmedel",
+    "ParentCategoryId": 44,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+  {
+    "Id": 46,
+    "Name": "Kläder och skor",
+    "ParentCategoryId": 44,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+  {
+    "Id": 47,
+    "Name": "Fritid/lek",
+    "ParentCategoryId": 44,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+  {
+    "Id": 48,
+    "Name": "Mobiltelefon",
+    "ParentCategoryId": 44,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+  {
+    "Id": 49,
+    "Name": "Hygienartiklar",
+    "ParentCategoryId": 44,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+  {
+    "Id": 50,
+    "Name": "Förbrukningsvaror",
+    "ParentCategoryId": 44,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+  {
+    "Id": 51,
+    "Name": "Hemutrustning",
+    "ParentCategoryId": 44,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+  {
+    "Id": 52,
+    "Name": "Lunchkostnader",
+    "ParentCategoryId": 44,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+  {
+    "Id": 53,
+    "Name": "Kollektivresor",
+    "ParentCategoryId": 44,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+  {
+    "Id": 54,
+    "Name": "Läkare, tandläkare, medicin",
+    "ParentCategoryId": 44,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+  {
+    "Id": 55,
+    "Name": "Sparande",
+    "ParentCategoryId": 44,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+  {
+    "Id": 56,
+    "Name": "Andra kostnader",
+    "ParentCategoryId": 44,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+
+  {
+    "Id": 57,
+    "Name": "Fasta kostnader",
+    "ParentCategoryId": 43,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+  {
+    "Id": 58,
+    "Name": "Medier",
+    "ParentCategoryId": 57,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+  {
+    "Id": 59,
+    "Name": "Övriga försäkringar",
+    "ParentCategoryId": 57,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+  {
+    "Id": 60,
+    "Name": "Barnomsorg och underhållsbidrag",
+    "ParentCategoryId": 57,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+  {
+    "Id": 61,
+    "Name": "A-kassa och fackavgift",
+    "ParentCategoryId": 57,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+  {
+    "Id": 62,
+    "Name": "Återbetalning CSN-lån",
+    "ParentCategoryId": 57,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+  {
+    "Id": 63,
+    "Name": "Övriga fasta kostnader",
+    "ParentCategoryId": 57,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  },
+  {
+    "Id": 64,
+    "Name": "Övriga lån",
+    "ParentCategoryId": 57,
+    "IsStandard": true,
+    "IsActive": true,
+    "Group": 0
+  }
+]

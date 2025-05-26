@@ -11,6 +11,7 @@ namespace Piggyzen.Api.Features.Categories
             public int Id { get; set; }
             public string Name { get; set; }
             public int? ParentCategoryId { get; set; }
+            public bool IsActive { get; set; } // Möjlighet att ändra IsActive
         }
 
         public class Handler : IRequestHandler<Command>
@@ -31,10 +32,16 @@ namespace Piggyzen.Api.Features.Categories
                 if (existingCategory == null)
                     throw new KeyNotFoundException($"Category with ID {request.Id} not found.");
 
+                // Förhindra ändringar av CoreCategory
+                if (existingCategory.IsSystemCategory)
+                    throw new InvalidOperationException($"Category with ID {request.Id} is a core category and cannot be modified.");
+
+                // Uppdatera fält som kan ändras
                 existingCategory.Name = request.Name;
                 existingCategory.ParentCategoryId = request.ParentCategoryId;
+                existingCategory.IsActive = request.IsActive;
 
-                // Prevent circular references if necessary
+                // Förhindra cirkulära referenser
                 if (request.ParentCategoryId == request.Id)
                     throw new InvalidOperationException("A category cannot be its own parent.");
 
